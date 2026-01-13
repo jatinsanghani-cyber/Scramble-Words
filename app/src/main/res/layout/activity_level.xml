@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_pattern"
+    android:gravity="center"
+    android:orientation="vertical"
+
+    android:padding="24dp">
+
+    <Button android:id="@+id/btnEasy" android:text="Easy" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnMedium" android:text="Medium " android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnHard" android:text="Hard " android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnExtreme" android:text="Extreme " android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
