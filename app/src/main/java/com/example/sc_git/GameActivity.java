@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
         btnHint.setOnClickListener(v -> {
             tvHint.setText("Hint: " + wordList.get(index).hint);
             tvHint.setVisibility(TextView.VISIBLE);
-            btnHint.setVisibility(Button.GONE); // 👈 hide after use
+            btnHint.setVisibility(Button.GONE); 
         });
     }
 
