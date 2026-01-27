@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_pattern"
+    android:background="@drawable/category"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,49 +12,45 @@
         android:gravity="center"
         android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Category"
-            android:textColor="@color/text_main"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="30dp"/>
 
-        <Button
+
+
+        <ImageButton
             android:id="@+id/btnTech"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Technology"
-            android:textColor="@color/bg_main"
-            android:background="@drawable/btn_rounded"
-            android:layout_marginBottom="15dp"/>
+            android:layout_width="229dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="134dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/tec"
+            android:scaleType="centerCrop" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btnScience"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Science"
-            android:textColor="@color/bg_main"
-            android:background="@drawable/btn_rounded"
-            android:layout_marginBottom="15dp"/>
+            android:layout_width="229dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/sc"
+            android:scaleType="centerCrop" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnEnglish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="English Vocabulary"
-            android:textColor="@color/bg_main"
-            android:background="@drawable/btn_rounded"
-            android:layout_marginBottom="15dp"/>
+            android:layout_width="229dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/e"
+            android:scaleType="centerCrop" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btnGK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="General Knowledge"
-            android:textColor="@color/bg_main"
-            android:background="@drawable/btn_rounded"/>
-
+            android:layout_width="229dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/gk"
+            android:scaleType="centerCrop" />
     </LinearLayout>
 </LinearLayout>
