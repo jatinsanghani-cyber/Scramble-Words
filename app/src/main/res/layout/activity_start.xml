@@ -4,31 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/bg_pattern"
+    android:background="@drawable/bg_pattern1"
     android:padding="24dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scramble Words"
-        android:textColor="@color/text_main"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Learn • Play • Improve"
-        android:textColor="@color/text_sub"
-        android:textSize="14sp"
-        android:layout_marginBottom="50dp"/>
-
-    <Button
+    <ImageButton
         android:id="@+id/btnStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start Game"
-        android:textColor="@color/bg_main"
-        android:background="@drawable/btn_rounded"/>
+        android:layout_width="192dp"
+        android:layout_height="79dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/play"
+        android:scaleType="centerCrop" />
+
 </LinearLayout>
