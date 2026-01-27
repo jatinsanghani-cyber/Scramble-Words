@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +21,9 @@ public class GameActivity extends AppCompatActivity {
 
     TextView tvCategory, tvWord, tvHint, tvScore, tvCount, tvCorrectAnswer, tvTimer;
     EditText etAnswer;
-    Button btnCheck, btnNext, btnHint;
+    ImageButton btnCheck, btnNext, btnHint;
 
     ArrayList<WordItem> wordList = new ArrayList<>();
-
     int index = 0, score = 0, maxQ;
     boolean isAnswerRevealed = false;
 
@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // Views
         tvCategory = findViewById(R.id.tvCategory);
         tvWord = findViewById(R.id.tvWord);
         tvHint = findViewById(R.id.tvHint);
@@ -58,49 +59,42 @@ public class GameActivity extends AppCompatActivity {
         showWord();
 
         btnCheck.setOnClickListener(v -> checkAnswer());
-        btnNext.setOnClickListener(v -> handlePassOrNext());
+        btnNext.setOnClickListener(v -> handleNext());
 
         btnHint.setOnClickListener(v -> {
             tvHint.setText("Hint: " + wordList.get(index).hint);
-            tvHint.setVisibility(TextView.VISIBLE);
-            btnHint.setVisibility(Button.GONE); 
+            tvHint.setVisibility(View.VISIBLE);
+            btnHint.setVisibility(View.INVISIBLE);
         });
     }
 
+    // ---------------- LEVEL LIMIT ----------------
     private int getLimit(String level) {
         if (level.equals("Easy")) return 5;
         if (level.equals("Medium")) return 4;
         if (level.equals("Hard")) return 3;
-        return 2;
+        return 2; // Extreme
     }
 
+    // ---------------- LOAD WORDS ----------------
     private void loadWords() {
         DBHelper db = new DBHelper(this);
         Cursor c = db.getWordsByCategory(category);
 
         while (c.moveToNext()) {
-            wordList.add(new WordItem(
-                    c.getString(1),
-                    c.getString(2)
-            ));
+            wordList.add(new WordItem(c.getString(1), c.getString(2)));
         }
         c.close();
-
         Collections.shuffle(wordList);
     }
 
+    // ---------------- SHOW WORD ----------------
     private void showWord() {
         if (timer != null) timer.cancel();
 
+        // GAME OVER
         if (index >= maxQ || index >= wordList.size()) {
-            unlockNextLevel();
-
-            Intent i = new Intent(this, GameOverActivity.class);
-            i.putExtra("score", score);
-            i.putExtra("category", category);
-            i.putExtra("level", level);
-            startActivity(i);
-            finish();
+            endGame();
             return;
         }
 
@@ -109,33 +103,32 @@ public class GameActivity extends AppCompatActivity {
         tvWord.setText(scramble(item.word));
         tvWord.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
 
-        // Reset hint state
-        tvHint.setVisibility(TextView.GONE);
-        btnHint.setVisibility(Button.GONE);
-
-        if (level.equals("Easy") || level.equals("Medium")) {
-            btnHint.setVisibility(Button.VISIBLE);
-        }
-
-        tvCorrectAnswer.setVisibility(TextView.GONE);
+        // Reset UI
+        tvHint.setVisibility(View.INVISIBLE);
+        tvCorrectAnswer.setVisibility(View.INVISIBLE);
         etAnswer.setText("");
 
         tvScore.setText("Score: " + score);
         tvCount.setText((index + 1) + "/" + maxQ);
 
-        btnNext.setText("Pass");
+        btnNext.setBackgroundResource(R.drawable.pass);
         isAnswerRevealed = false;
 
-        // Timer only for Hard & Extreme
-        if (level.equals("Hard") || level.equals("Extreme")) {
-            startTimer();
-        } else {
+        // ---------- HINT & TIMER LOGIC ----------
+        btnHint.setVisibility(View.VISIBLE);
+        if (level.equals("Easy") || level.equals("Medium")) {
+            // Timer OFF
             tvTimer.setText("");
+        } else {
+            // Timer ON
+            startTimer();
         }
     }
 
+    // ---------------- TIMER (HARD & EXTREME) ----------------
     private void startTimer() {
         timer = new CountDownTimer(15000, 1000) {
+
             @Override
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText("Time: " + (millisUntilFinished / 1000));
@@ -143,18 +136,32 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                handlePassOrNext();
+                handleNext(); // auto-pass
             }
         }.start();
     }
 
+    // ---------------- NEXT / PASS ----------------
+    private void handleNext() {
+        if (!isAnswerRevealed) {
+            tvCorrectAnswer.setText("Correct Answer: " + wordList.get(index).word);
+            tvCorrectAnswer.setVisibility(View.VISIBLE);
+            btnNext.setBackgroundResource(R.drawable.next);
+            isAnswerRevealed = true;
+        } else {
+            index++;
+            showWord();
+        }
+    }
+
+    // ---------------- CHECK ANSWER ----------------
     private void checkAnswer() {
         if (isAnswerRevealed) return;
 
-        String userAnswer = etAnswer.getText().toString().trim().toLowerCase();
-        String correctAnswer = wordList.get(index).word.toLowerCase();
+        String user = etAnswer.getText().toString().trim().toLowerCase();
+        String correct = wordList.get(index).word.toLowerCase();
 
-        if (userAnswer.equals(correctAnswer)) {
+        if (user.equals(correct)) {
             score++;
             index++;
             showWord();
@@ -163,24 +170,30 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void handlePassOrNext() {
-        if (!isAnswerRevealed) {
-            tvCorrectAnswer.setText("Correct Answer: " + wordList.get(index).word);
-            tvCorrectAnswer.setVisibility(TextView.VISIBLE);
-            tvCorrectAnswer.startAnimation(
-                    AnimationUtils.loadAnimation(this, R.anim.fade_in)
-            );
-            btnNext.setText("Next Question");
-            isAnswerRevealed = true;
-        } else {
-            index++;
-            showWord();
-        }
+    // ---------------- GAME OVER ----------------
+    private void endGame() {
+        saveBestScore();
+        unlockNextLevel();
+
+        Intent i = new Intent(this, GameOverActivity.class);
+        i.putExtra("score", score);
+        i.putExtra("category", category);
+        i.putExtra("level", level);
+        startActivity(i);
+        finish();
     }
 
+    // ---------------- SAVE BEST SCORE ----------------
+    private void saveBestScore() {
+        SharedPreferences sp = getSharedPreferences("BEST_SCORES", MODE_PRIVATE);
+        String key = category + "_" + level + "_BEST";
+        int best = sp.getInt(key, 0);
+        if (score > best) sp.edit().putInt(key, score).apply();
+    }
+
+    // ---------------- UNLOCK NEXT LEVEL ----------------
     private void unlockNextLevel() {
-        SharedPreferences.Editor e =
-                getSharedPreferences("LEVELS", MODE_PRIVATE).edit();
+        SharedPreferences.Editor e = getSharedPreferences("LEVELS", MODE_PRIVATE).edit();
 
         if (level.equals("Easy")) e.putBoolean(category + "_Medium", true);
         if (level.equals("Medium")) e.putBoolean(category + "_Hard", true);
@@ -189,6 +202,7 @@ public class GameActivity extends AppCompatActivity {
         e.apply();
     }
 
+    // ---------------- SCRAMBLE WORD ----------------
     private String scramble(String word) {
         ArrayList<Character> chars = new ArrayList<>();
         for (char c : word.toCharArray()) chars.add(c);
