@@ -5,50 +5,64 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="@drawable/bg_pattern">
+    android:background="@drawable/game_over">
 
     <TextView
         android:id="@+id/tvGameOver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:shadowColor="@color/bg_main"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
         android:text="Game Over"
-        android:textSize="28sp"
-        android:textStyle="bold"
         android:textColor="@color/text_main"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="31sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvFinalScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score: 0"
-        android:textSize="18sp"
+        android:textSize="21sp"
+        android:textStyle="bold"
         android:textColor="@color/text_sub"
+        android:shadowColor="@color/bg_main"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
         android:layout_marginBottom="24dp"/>
     <TextView
         android:id="@+id/tvBestScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Best Score: 0"
-        android:textSize="16sp"
+        android:textSize="21sp"
+        android:textStyle="bold"
         android:textColor="@color/text_sub"
+        android:shadowColor="@color/bg_main"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
         android:layout_marginBottom="24dp"/>
 
 
-    <Button
+    <ImageButton
         android:id="@+id/btnRetry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="207dp"
+        android:layout_height="79dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/retry"
         android:text="Retry Level"
-        android:background="@drawable/btn_rounded"
-        android:textColor="@color/bg_main"
-        android:layout_marginBottom="12dp"/>
+        android:textColor="@color/bg_main" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="207dp"
+        android:layout_height="79dp"
+        android:background="@drawable/cat"
         android:text="Back to Categories"
-        android:background="@drawable/btn_rounded"
-        android:textColor="@color/bg_main"/>
+        android:textColor="@color/bg_main" />
 </LinearLayout>
