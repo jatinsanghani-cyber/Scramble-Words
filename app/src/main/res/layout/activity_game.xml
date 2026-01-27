@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_pattern"
-    android:padding="20dp"
-    android:gravity="center">
+    android:background="@drawable/game"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="100dp"
+    android:gravity="top">
 
     <!-- CATEGORY + LEVEL -->
     <TextView
@@ -14,6 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Category - Level"
         android:textSize="18sp"
+        android:paddingLeft="20dp"
         android:textStyle="bold"
         android:textColor="@color/text_main"
         android:layout_marginBottom="6dp" />
@@ -24,10 +27,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="14sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/text_sub"
-        android:layout_marginBottom="10dp" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/holo_red_dark"
+         />
 
     <!-- SCORE + COUNT -->
     <LinearLayout
@@ -42,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Score: 0"
+            android:textStyle="bold"
+            android:paddingLeft="26dp"
             android:textSize="14sp"
             android:textColor="@color/text_sub" />
 
@@ -50,111 +56,98 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1/5"
+            android:textStyle="bold"
+            android:paddingRight="19dp"
             android:textSize="14sp"
             android:textColor="@color/text_sub" />
     </LinearLayout>
 
-    <!-- GAME CARD -->
-    <LinearLayout
+    <!-- SCRAMBLED WORD -->
+    <TextView
+        android:id="@+id/tvWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SCRAMBLED"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_main"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp" />
+
+    <!-- 🔒 HINT AREA (ABSOLUTE POSITIONING) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp">
+
+        <!-- CENTERED HINT TEXT -->
+        <TextView
+            android:id="@+id/tvHint"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textSize="15sp"
+            android:textColor="@color/text_sub"
+            android:gravity="center"
+            android:visibility="invisible" />
+
+        <!-- HINT BUTTON -->
+        <ImageButton
+            android:id="@+id/btnHint"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/hint"
+            android:scaleType="centerCrop"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <!-- CORRECT ANSWER -->
+    <TextView
+        android:id="@+id/tvCorrectAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:textColor="#2E7D32"
+        android:layout_gravity="center"
+        android:layout_marginBottom="14dp"
+        android:visibility="invisible" />
+
+    <!-- ANSWER INPUT -->
+    <EditText
+        android:id="@+id/etAnswer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="22dp"
-        android:background="@color/card_bg">
+        android:hint="Enter your answer"
+        android:layout_marginTop="40dp"
+        android:textStyle="bold"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sub"
+        android:backgroundTint="@color/primary"
+        android:layout_marginBottom="18dp" />
 
-        <!-- SCRAMBLED WORD -->
-        <TextView
-            android:id="@+id/tvWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SCRAMBLED"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_main"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp" />
+    <!-- ACTION BUTTONS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="horizontal">
 
-        <!-- HINT ROW (TEXT + BUTTON INLINE) -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp">
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/pass" />
 
-            <TextView
-                android:id="@+id/tvHint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:textColor="@color/text_sub"
-                android:visibility="gone"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btnHint"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Hint"
-                android:textSize="12sp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:background="@drawable/btn_rounded"
-                android:textColor="@color/bg_main"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <!-- CORRECT ANSWER -->
-        <TextView
-            android:id="@+id/tvCorrectAnswer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#2E7D32"
-            android:layout_gravity="center"
-            android:layout_marginBottom="14dp"
-            android:visibility="gone" />
-
-        <!-- ANSWER INPUT -->
-        <EditText
-            android:id="@+id/etAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter your answer"
-            android:textColor="@color/text_main"
-            android:textColorHint="@color/text_sub"
-            android:backgroundTint="@color/primary"
-            android:layout_marginBottom="18dp" />
-
-        <!-- ACTION BUTTONS -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnCheck"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Check"
-                android:textColor="@color/bg_main"
-                android:background="@drawable/btn_rounded"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Pass"
-                android:textColor="@color/bg_main"
-                android:background="@drawable/btn_rounded" />
-        </LinearLayout>
-
+        <ImageButton
+            android:id="@+id/btnCheck"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/check" />
     </LinearLayout>
 
 </LinearLayout>
