@@ -3,47 +3,55 @@ package com.example.scramble_words;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameOverActivity extends AppCompatActivity {
 
+    TextView tvFinalScore, tvBestScore;
+    ImageButton btnRetry, btnBack;
+
     @Override
-    protected void onCreate(Bundle b) {
-        super.onCreate(b);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
+        // Bind views
+        tvFinalScore = findViewById(R.id.tvFinalScore);
+        tvBestScore = findViewById(R.id.tvBestScore);
+        btnRetry = findViewById(R.id.btnRetry);
+        btnBack = findViewById(R.id.btnBack);
+
+        // Get data from GameActivity
         int score = getIntent().getIntExtra("score", 0);
-        String cat = getIntent().getStringExtra("category");
-        String lvl = getIntent().getStringExtra("level");
+        String category = getIntent().getStringExtra("category");
+        String level = getIntent().getStringExtra("level");
 
-        TextView tvScore = findViewById(R.id.tvFinalScore);
-        TextView tvBest = findViewById(R.id.tvBestScore);
+        // Show final score
+        tvFinalScore.setText("Score: " + score);
 
-        SharedPreferences p = getSharedPreferences("HIGHSCORE", MODE_PRIVATE);
-        String key = cat + "_" + lvl;
-        int best = p.getInt(key, 0);
+        // Load best score
+        SharedPreferences sp = getSharedPreferences("BEST_SCORES", MODE_PRIVATE);
+        int bestScore = sp.getInt(category + "_" + level + "_BEST", 0);
 
-        if (score > best) {
-            best = score;
-            p.edit().putInt(key, best).apply();
-        }
+        tvBestScore.setText("Best Score: " + bestScore);
 
-        tvScore.setText("Score: " + score);
-        tvBest.setText("Best Score: " + best);
-
-        findViewById(R.id.btnRetry).setOnClickListener(v -> {
-            Intent i = new Intent(this, GameActivity.class);
-            i.putExtra("category", cat);
-            i.putExtra("level", lvl);
-            startActivity(i);
+        // Retry same level
+        btnRetry.setOnClickListener(v -> {
+            Intent intent = new Intent(GameOverActivity.this, GameActivity.class);
+            intent.putExtra("category", category);
+            intent.putExtra("level", level);
+            startActivity(intent);
             finish();
         });
 
-        findViewById(R.id.btnBack).setOnClickListener(v -> {
-            startActivity(new Intent(this, CategoryActivity.class));
+        // Back to categories
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(GameOverActivity.this, CategoryActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             finish();
         });
     }
