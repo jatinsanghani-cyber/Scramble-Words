@@ -1,14 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_pattern"
+    android:background="@drawable/game_over"
     android:gravity="center"
     android:orientation="vertical"
-
     android:padding="24dp">
 
-    <Button android:id="@+id/btnEasy" android:text="Easy" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnMedium" android:text="Medium " android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnHard" android:text="Hard " android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnExtreme" android:text="Extreme " android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <!-- EASY -->
+    <ImageButton
+        android:id="@+id/btnEasy"
+        android:layout_width="281dp"
+        android:layout_marginTop="45dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/easy"
+        android:contentDescription="Easy"
+        android:scaleType="centerCrop" />
+
+    <!-- MEDIUM -->
+    <ImageButton
+        android:id="@+id/btnMedium"
+        android:layout_width="281dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/medium"
+        android:contentDescription="Medium"
+        android:scaleType="centerCrop" />
+
+    <!-- HARD -->
+
+    <!-- EXTREME -->
+    <ImageButton
+        android:id="@+id/btnHard"
+        android:layout_width="281dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/hard"
+        android:contentDescription="Hard"
+        android:scaleType="centerCrop" />
+
+    <ImageButton
+        android:id="@+id/btnExtreme"
+        android:layout_width="281dp"
+        android:layout_height="70dp"
+        android:background="@drawable/extreme"
+        android:contentDescription="Extreme"
+        android:scaleType="centerCrop" />
+
 </LinearLayout>
